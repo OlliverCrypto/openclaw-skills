@@ -1,57 +1,53 @@
 ---
 name: ultra-memory-hygiene-skill
-description: "What deserves persisting, how to write it so it survives time, and when to re-verify what you recall."
+description: "Controls what enters persistent agent memory and how stale knowledge is revised. Use when recording decisions, updating durable context, consolidating daily notes, removing duplication, or deciding whether information should persist."
+license: Apache-2.0
+metadata:
+  {
+    "openclaw":
+      {
+        "emoji": "🧹",
+      },
+  }
 ---
 
-# ultra-memory-hygiene-skill: memory is a claim about the past, not a fact about the present
+# Ultra Memory Hygiene
 
-> Derived from Iwo's Rigor Pack (Fable 5 → Opus 4.8 blind-tested, 2-0).
-> Adapted for OpenClaw agent workflows.
+Persistent memory should reduce future uncertainty without becoming a second noisy log.
 
-An agent's persistent memory is its highest-leverage asset and its most dangerous one. Good memory compounds: every session starts smarter. Bad memory compounds too: one stale "fact" confidently recalled can outvote the live system in front of you. This skill governs both directions - what goes in, and how what comes out gets trusted.
+## Admission Test
 
-## When to use
+Persist an item only when it is durable, useful to a later operator, and expensive or risky to rediscover. Prefer:
 
-- When writing to or reading from any persistent memory an agent keeps across sessions
-- CLAUDE.md, memory files, notes, project docs meant for future sessions
-- When a session starts by loading old memory
+- decisions with rationale and rejected alternatives;
+- stable constraints and user preferences;
+- verified system state that changes future actions;
+- recurring failure lessons with a concrete prevention rule;
+- pointers to authoritative artifacts when copying them would create drift.
 
-## When NOT to use
+Do not persist secrets, transient execution chatter, easily derived output, duplicate facts, or unresolved guesses.
 
-- Ephemeral session notes that have no future value
-- When the memory file is already clean and current (don't add ceremony)
-- For single-use reminders (use cron instead)
+## Write Format
 
-## Writing: what deserves persistence
+Each durable entry should answer:
 
-Persist the things a future session cannot rederive:
+1. What is true or decided?
+2. As of when or which revision?
+3. Why does it matter?
+4. What source can revalidate it?
+5. What prior statement does it replace?
 
-- **Decisions and their WHY.** "We chose X over Y because Z" - the why is the part that evaporates.
-- **Corrections received.** When a human corrects you, that is the single most valuable thing to persist - with the reason, so the future session applies the principle, not just the rule.
-- **Non-obvious constraints.** The gotcha that cost an hour. The API that lies. The step that must come first.
-- **Preferences of the humans you work with.** How they like to be asked, what they care about.
+Use factual, actionable language. Record causes and constraints instead of vague evaluations.
 
-Do NOT persist what the codebase, git history, or docs already record - memory that duplicates a derivable fact is bloat that ages into contradiction. And never persist secrets.
+## Placement
 
-## Writing: how
+- Daily notes hold raw chronology awaiting consolidation.
+- Thematic segments hold durable knowledge by subject.
+- Checkpoints hold resolved operational state.
+- The memory hub indexes high-value current state and points to detail.
 
-- **One fact per entry, dated.** "As of 2026-07-02, the deploy hook is armed" ages honestly. Undated facts rot invisibly.
-- **Write the trigger with the fact.** A future session needs to know WHEN this matters: "when touching the publish pipeline, remember X".
-- **Small and curated beats large and complete.** Memory is loaded into a finite context. Every stale line taxes every future session. Prune when you add.
+Update the existing source of truth when one exists. Do not create parallel versions of the same fact.
 
-## Recall: the verification rule
+## Staleness
 
-Remembered facts are point-in-time observations. Before ACTING on one:
-
-1. **Grade the staleness risk.** Preferences and decisions age slowly. System state (versions, configs, file locations, what is deployed) ages fast.
-2. **Fast-aging fact + consequential action = verify first.** One live probe (does the file still exist, is the flag still set, does the endpoint still respond) before building on the memory.
-3. **When memory and live state disagree, live state wins** - and update the memory in the same breath. A contradicted memory left standing will bite the next session too.
-4. **Say which you are using.** "Per memory from June" versus "verified just now" - the reader deserves to know the vintage of your facts.
-
-## The maintenance habit
-
-When a memory proves wrong: fix it immediately, do not just route around it. When a memory proves right and important: consider promoting it (clearer trigger, better placement). A memory store nobody prunes becomes a liability with a good reputation.
-
-## The honest limit
-
-This skill gives memory DISCIPLINE inside the tools you already have. What it cannot give is persistence itself - a skill file cannot remember your decisions for you, and everything a session learns still evaporates when the session ends unless something durable catches it. Discipline plus durable storage is the complete system. This skill is the discipline half.
+Set revalidation cadence from volatility and consequence. Versions, endpoints, ownership, access, and personnel data age faster than architecture principles or historical decisions. When verification changes a fact, update or retire the old entry rather than appending a contradiction.

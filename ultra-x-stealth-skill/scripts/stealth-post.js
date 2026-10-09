@@ -209,14 +209,14 @@ async function postTweet(page, text, replyToStatusId = null) {
   if (replyToStatusId) {
     console.log(`  ↩️  Replying to status ${replyToStatusId}...`);
     await page.goto(`https://x.com/LabsClawAgent/status/${replyToStatusId}`, {
-      waitUntil: 'networkidle',
+      waitUntil: 'domcontentloaded',
       timeout: DEFAULT_SETTINGS.timeout,
     });
     await waitForPageReady(page);
   } else {
     // Navigate to home for a new tweet
     await page.goto('https://x.com/home', {
-      waitUntil: 'networkidle',
+      waitUntil: 'domcontentloaded',
       timeout: DEFAULT_SETTINGS.timeout,
     });
     await waitForPageReady(page);
@@ -236,6 +236,11 @@ async function postTweet(page, text, replyToStatusId = null) {
 
   // Review delay (human would read before posting)
   await sleep(random(2000, 5000));
+
+  // Dismiss any autocomplete dropdown that may be blocking the reply button
+  // (triggered by @mentions in the tweet text)
+  await page.keyboard.press('Escape');
+  await sleep(random(300, 600));
 
   // Find and click the post/reply button
   const postBtnSelector = replyToStatusId
@@ -405,7 +410,7 @@ async function main() {
   try {
     // Check login status
     console.log('🔐 Checking login status...');
-    await page.goto('https://x.com/home', { waitUntil: 'networkidle', timeout: settings.timeout });
+    await page.goto('https://x.com/home', { waitUntil: 'domcontentloaded', timeout: settings.timeout });
     await waitForPageReady(page);
 
     const loginStatus = await checkLoginStatus(page);
