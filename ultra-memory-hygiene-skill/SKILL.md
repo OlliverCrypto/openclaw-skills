@@ -20,10 +20,15 @@ Persistent memory should reduce future uncertainty without becoming a second noi
 Persist an item only when it is durable, useful to a later operator, and expensive or risky to rediscover. Prefer:
 
 - decisions with rationale and rejected alternatives;
-- stable constraints and user preferences;
+- stable constraints and user preferences (with explicit scope);
 - verified system state that changes future actions;
 - recurring failure lessons with a concrete prevention rule;
 - pointers to authoritative artifacts when copying them would create drift.
+
+### 🛡️ Anti-Overgeneralization Standard (Codex Memory Rule)
+- **Distinguish Human vs Agent Evidence:** Prioritize what the human user explicitly requested, decided, or constrained over assistant assumptions, interpretations, or omitted justifications.
+- **Never Promote One-Off Requests to Universal Rules:** Single-task preferences (e.g. *"format as JSON this time"*) belong only to that task's context or daily log. Do NOT infer a permanent global preference unless the user explicitly stated it as a default across tasks.
+- **Scope & Limitations:** Always document the applicable scope and boundary conditions so future agents are not constrained by obsolete or accidental assumptions.
 
 Do not persist secrets, transient execution chatter, easily derived output, duplicate facts, or unresolved guesses.
 

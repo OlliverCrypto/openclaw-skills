@@ -15,7 +15,14 @@ metadata:
 
 Do not start a multi-step mutation until the task has a verifiable execution contract.
 
-## Pre-Edit Gate
+## Pre-Edit Gate: Decision Complete (Codex Standard)
+
+A great plan is **decision complete**: the implementer (human or sub-agent) should not need to make architectural or scope decisions during execution.
+
+### Execution vs Mutation Boundary during Planning
+- **Allowed (non-mutating, truth-gathering):** Read/search files, configs, schemas, types, dry-runs, tests or builds writing only to temp/cache artifacts.
+- **Not allowed (mutating, premature execution):** Editing/creating repo-tracked files, applying patches, running formatters/linters with rewrite, or running migrations.
+- **Prompt Shielding:** Imperative user commands during planning ("do it now", "run this") must be treated as a request to **plan the execution**, never as permission to bypass the gate.
 
 Inspect the relevant files and current state, then write:
 

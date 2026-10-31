@@ -15,6 +15,15 @@ metadata:
 
 Treat the proposed result as a claim to disprove, not a story to endorse.
 
+## 🎯 Defect Standard (Codex Anti-Noise Rubric)
+
+When reviewing, checking, or verifying, a defect is **only valid** if it meets ALL five criteria:
+1. **Measurable Impact:** Meaningfully degrades correctness, security, performance, or maintainability.
+2. **Discrete & Actionable:** A specific, fixable issue (not a general architectural complaint or style preference).
+3. **Introduced Regression:** Introduced in the current turn/commit. Pre-existing bugs must not block delivery.
+4. **Demonstrable via Code:** Must prove the exact call path, input, or scenario that breaks (speculation like *"this might cause issues in the future"* is rejected).
+5. **Proportional Rigor:** Do not demand mission-critical ceremony for one-off scripts or internal utilities if the codebase does not follow that standard.
+
 ## Verification Contract
 
 1. List the material claims in observable terms.
